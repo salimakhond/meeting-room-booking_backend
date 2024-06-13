@@ -17,6 +17,13 @@ router.post(
 //Get All Bookings route
 router.get('/bookings', auth(USER_ROLE.admin), BookingController.getAllBooking);
 
+// Get User's Bookings route
+router.get(
+  '/my-bookings',
+  auth(USER_ROLE.user),
+  BookingController.getUserBookings
+);
+
 // Update Bookings route
 router.put(
   '/bookings/:id',
@@ -24,10 +31,11 @@ router.put(
   BookingController.updateBooking
 );
 
-router.get(
-  '/my-bookings',
-  auth(USER_ROLE.user),
-  BookingController.getUserBookings
+// Deleted Booking Route
+router.delete(
+  '/bookings/:id',
+  auth(USER_ROLE.admin),
+  BookingController.deleteBooking
 );
 
 export const BookingRoutes = router;

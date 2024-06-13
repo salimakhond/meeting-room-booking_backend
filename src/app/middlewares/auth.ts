@@ -17,7 +17,6 @@ const auth = (...userRoles: TUserRole[]) => {
       token,
       config.jwt_access_secret as string
     ) as JwtPayload;
-    console.log(decoded);
     //check user role
     if (userRoles && !userRoles.includes(decoded?.role)) {
       throw new AppError(401, 'You have no access to this route');

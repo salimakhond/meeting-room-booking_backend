@@ -148,9 +148,37 @@ const updateBookingIntoDB = async (id: string, payload: Partial<TBooking>) => {
   return result;
 };
 
+// Deleted Booking Service
+const deleteBookingFromDB = async (id: string) => {
+  // check booking is exists
+  const isBookingExists = await Booking.isBookingExists(id);
+
+  if (!isBookingExists) {
+    throw new AppError(httpStatus.NOT_FOUND, 'This booking is not found !');
+  }
+
+  // booking is deleted
+  if (isBookingExists?.isDeleted) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'This booking is already deleted !'
+    );
+  }
+
+  const result = await Booking.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    {
+      new: true,
+    }
+  );
+  return result;
+};
+
 export const BookingServices = {
   createBookingIntoDB,
   getAllBookingFromDB,
   getUserBookingsFromDB,
   updateBookingIntoDB,
+  deleteBookingFromDB,
 };
