@@ -33,13 +33,20 @@ const createSlotIntoDB = async (payload: TSlot) => {
 
 // Get Available Slots Service
 const getAvailableSlotsFormDB = async (date?: string, roomId?: string) => {
-  //   Check searching roomId is valid
-  const existingRoom = await Room.findById(roomId as any);
-  if (!existingRoom) {
-    throw new AppError(httpStatus.NOT_FOUND, 'slot not found');
+  let query: any = {
+    isBooked: false,
+  };
+
+  // Check roomId is valid
+  if (roomId) {
+    const existingRoom = await Room.findById(roomId);
+    if (!existingRoom) {
+      throw new AppError(httpStatus.NOT_FOUND, 'Room not found');
+    }
+    query.room = roomId;
   }
 
-  // Check searching date is valid
+  // Check date is valid
   if (date) {
     const availableSlotsCount = await Slot.countDocuments({
       date,
@@ -51,19 +58,7 @@ const getAvailableSlotsFormDB = async (date?: string, roomId?: string) => {
         'No available slots for this date'
       );
     }
-  }
-
-  const query: any = {
-    isBooked: false,
-  };
-
-  // get date and/or roomId
-  if (date) {
     query.date = date;
-  } else if (date) {
-  }
-  if (roomId) {
-    query.room = roomId;
   }
 
   const result = await Slot.find(query);
