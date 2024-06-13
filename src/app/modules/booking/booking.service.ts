@@ -87,10 +87,17 @@ const createBookingIntoDB = async (payload: TBooking) => {
   // total amount slots booked
   const totalAmount = slots.length * isExistingRoom.pricePerSlot;
 
-  const result = await Booking.create({
+  const createdBooking = await Booking.create({
     ...payload,
     totalAmount,
   });
+
+  // Populate room, slots, and user fields in the booking
+  const result = await Booking.findById(createdBooking._id)
+    .populate('room')
+    .populate('slots')
+    .populate('user');
+
   return result;
 };
 
