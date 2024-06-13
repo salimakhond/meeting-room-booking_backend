@@ -1,6 +1,8 @@
 import { Schema, model } from 'mongoose';
 import { TUser } from './user.interface';
 import validator from 'validator';
+import config from '../../config';
+import bcrypt from 'bcrypt';
 
 const userSchema = new Schema<TUser>({
   name: {
@@ -35,5 +37,19 @@ const userSchema = new Schema<TUser>({
     required: [true, 'Address is required'],
   },
 });
+
+userSchema.pre('save', async function (next) {
+  this.password = await bcrypt.hash(
+    this.password,
+    Number(config.bcrypt_salt_round)
+  );
+  next();
+});
+//remove user from response
+userSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
 
 export const User = model<TUser>('User', userSchema);
