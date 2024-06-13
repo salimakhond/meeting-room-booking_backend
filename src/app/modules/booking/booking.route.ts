@@ -10,6 +10,7 @@ const router = express.Router();
 // Create Booking Route
 router.post(
   '/bookings',
+  auth(USER_ROLE.user),
   validateRequest(bookingValidation.createBookingValidationSchema),
   BookingController.createBooking
 );
@@ -27,6 +28,7 @@ router.get(
 // Update Bookings route
 router.put(
   '/bookings/:id',
+  auth(USER_ROLE.admin),
   validateRequest(bookingValidation.updateBookingValidationSchema),
   BookingController.updateBooking
 );
