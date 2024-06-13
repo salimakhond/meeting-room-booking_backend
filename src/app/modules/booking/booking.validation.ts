@@ -9,6 +9,13 @@ const createBookingValidationSchema = z.object({
   }),
 });
 
+const updateBookingValidationSchema = z.object({
+  body: z.object({
+    isConfirmed: z.string().optional(),
+  }),
+});
+
 export const bookingValidation = {
   createBookingValidationSchema,
+  updateBookingValidationSchema,
 };

@@ -15,4 +15,11 @@ router.post(
 //Get All Bookings route
 router.get('/', BookingController.getAllBooking);
 
+// Update Bookings route
+router.put(
+  '/:id',
+  validateRequest(bookingValidation.updateBookingValidationSchema),
+  BookingController.updateBooking
+);
+
 export const BookingRoutes = router;
