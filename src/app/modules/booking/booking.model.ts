@@ -27,7 +27,9 @@ const bookingSchema = new Schema<TBooking, BookingModel>({
     ref: 'User',
     required: [true, 'User Id is required'],
   },
-
+  totalAmount: {
+    type: Number,
+  },
   isConfirmed: {
     type: String,
     enum: BOOKING_ENUM,

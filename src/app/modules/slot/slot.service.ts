@@ -52,6 +52,7 @@ const getAvailableSlotsFormDB = async (date?: string, roomId?: string) => {
       date,
       isBooked: false,
     });
+
     if (availableSlotsCount === 0) {
       throw new AppError(
         httpStatus.NOT_FOUND,
