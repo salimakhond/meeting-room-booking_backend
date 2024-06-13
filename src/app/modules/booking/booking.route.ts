@@ -12,4 +12,7 @@ router.post(
   BookingController.createBooking
 );
 
+//Get All Bookings route
+router.get('/', BookingController.getAllBooking);
+
 export const BookingRoutes = router;
