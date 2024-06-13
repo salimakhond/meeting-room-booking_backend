@@ -1,3 +1,4 @@
+import { JwtPayload } from 'jsonwebtoken';
 import httpStatus from 'http-status';
 import { Room } from '../room/room.model';
 import { TBooking } from './booking.interface';
@@ -110,6 +111,18 @@ const getAllBookingFromDB = async () => {
   return result;
 };
 
+//Get User's Bookings Service
+const getUserBookingsFromDB = async (user: JwtPayload) => {
+  const isUserExist = await User.findOne({ email: user.userEmail });
+  const userId = isUserExist?._id;
+  const result = await Booking.find({ user: userId })
+    .populate('room')
+    .populate('slots')
+    .populate('user');
+
+  return !result.length ? [] : result;
+};
+
 // Update Booking Service
 const updateBookingIntoDB = async (id: string, payload: Partial<TBooking>) => {
   // check Booking is exists
@@ -138,5 +151,6 @@ const updateBookingIntoDB = async (id: string, payload: Partial<TBooking>) => {
 export const BookingServices = {
   createBookingIntoDB,
   getAllBookingFromDB,
+  getUserBookingsFromDB,
   updateBookingIntoDB,
 };

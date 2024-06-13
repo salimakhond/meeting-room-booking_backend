@@ -27,6 +27,20 @@ const getAllBooking = catchAsync(async (req, res) => {
   });
 });
 
+//Get User's Bookings Controller
+const getUserBookings = catchAsync(async (req, res) => {
+  const user = req.user;
+  const result = await BookingServices.getUserBookingsFromDB(user);
+  sendResponse(res, {
+    statusCode: !result.length ? httpStatus.NOT_FOUND : httpStatus.OK,
+    success: !result.length ? false : true,
+    message: !result.length
+      ? 'No Data Found'
+      : 'User bookings retrieved successfully',
+    data: result,
+  });
+});
+
 // Update Booking
 const updateBooking = catchAsync(async (req, res) => {
   const { id } = req.params;
@@ -43,5 +57,6 @@ const updateBooking = catchAsync(async (req, res) => {
 export const BookingController = {
   createBooking,
   getAllBooking,
+  getUserBookings,
   updateBooking,
 };

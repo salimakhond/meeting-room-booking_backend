@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { User } from '../user/user.model';
 import AppError from '../../errors/App.Error';
+import httpStatus from 'http-status';
 
 const createUserIntoDB = async (payload: TUser) => {
   const result = await User.create(payload);
@@ -24,7 +25,7 @@ const loginUser = async (payload: TLoginUser) => {
     user?.password
   );
   if (!isPasswordMatched) {
-    throw new AppError(400, 'Password do not matched!');
+    throw new AppError(httpStatus.BAD_REQUEST, 'Password do not matched!');
   }
   const jwtPayload = {
     userEmail: user?.email,

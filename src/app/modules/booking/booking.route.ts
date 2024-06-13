@@ -9,19 +9,25 @@ const router = express.Router();
 
 // Create Booking Route
 router.post(
-  '/',
+  '/bookings',
   validateRequest(bookingValidation.createBookingValidationSchema),
   BookingController.createBooking
 );
 
 //Get All Bookings route
-router.get('/', auth(USER_ROLE.admin), BookingController.getAllBooking);
+router.get('/bookings', auth(USER_ROLE.admin), BookingController.getAllBooking);
 
 // Update Bookings route
 router.put(
-  '/:id',
+  '/bookings/:id',
   validateRequest(bookingValidation.updateBookingValidationSchema),
   BookingController.updateBooking
+);
+
+router.get(
+  '/my-bookings',
+  auth(USER_ROLE.user),
+  BookingController.getUserBookings
 );
 
 export const BookingRoutes = router;
