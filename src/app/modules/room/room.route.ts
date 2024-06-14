@@ -1,6 +1,5 @@
 import express from 'express';
 import validateRequest from '../../middlewares/validateRequest';
-import { userValidation } from '../user/user.validation';
 import { RoomController } from './room.controller';
 import { roomValidation } from './room.validation';
 import auth from '../../middlewares/auth';

@@ -1,14 +1,14 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
-import tseslint from "typescript-eslint";
+import globals from 'globals';
+import pluginJs from '@eslint/js';
+import tseslint from 'typescript-eslint';
 
 export default [
   {
-    ignores: ["**/node_modules/", ".dist/"],
+    ignores: ['**/node_modules/', '.dist/'],
     languageOptions: {
       globals: {
         ...globals.browser,
-        process: "readonly",
+        process: 'readonly',
       },
     },
 
@@ -21,11 +21,11 @@ export default [
     // ],
 
     rules: {
-      "no-unused-vars": "error",
-      "no-unused-expressions": "error",
-      "prefer-const": "error",
-      "no-undef": "error",
-      "no-console": "warn",
+      'no-unused-vars': 'error',
+      'no-unused-expressions': 'error',
+      'prefer-const': 'error',
+      'no-undef': 'error',
+      'no-console': 'warn',
     },
   },
   pluginJs.configs.recommended,

@@ -12,12 +12,12 @@ app.use(cors());
 // application routes
 app.use('/api', router);
 
-// const test = async (req: Request, res: Response) => {
-//   const a = ' 10';
-//   res.send(a);
-// };
+const test = async (req: Request, res: Response) => {
+  const a = "Hello I'm Meeting Room Booking System";
+  res.send(a);
+};
 
-// app.get('/', test);
+app.get('/', test);
 
 // global error
 app.use(globalErrorHandler);
